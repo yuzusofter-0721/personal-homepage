@@ -1,0 +1,2027 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="我的数据小馆个人主页" />
+  <title>我的数据小馆</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #fefdfe;
+      --surface: #ffffff;
+      --surface-strong: #f3f2f7;
+      --ink: #28312e;
+      --muted: #696977;
+      --accent: #2e7d74;
+      --accent-strong: #c75d37;
+      --line: rgba(40, 40, 60, 0.12);
+      --shadow: 0 18px 50px rgba(40, 40, 60, 0.1);
+      font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+    }
+
+    body[data-profile="heron"] {
+      --bg: #e9f0f3;
+      --surface: #f5f8fa;
+      --surface-strong: #c9dbe3;
+      --ink: #12242c;
+      --muted: #445f6b;
+      --accent: #1f5574;
+      --accent-strong: #c73532;
+      --line: rgba(20, 59, 78, 0.2);
+      --shadow: 0 20px 54px rgba(20, 59, 78, 0.18);
+    }
+
+    [data-theme="night"] {
+      color-scheme: dark;
+      --bg: #1f1e33;
+      --surface: #292840;
+      --surface-strong: #343252;
+      --ink: #f1efe6;
+      --muted: #c4c1d9;
+      --accent: #8f8cff;
+      --accent-strong: #f0a16f;
+      --line: rgba(241, 239, 230, 0.16);
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    body[data-theme="night"][data-profile="heron"] {
+      --bg: #0d1720;
+      --surface: #152333;
+      --surface-strong: #1e3547;
+      --ink: #edf7f8;
+      --muted: #a9c0ca;
+      --accent: #4f91b2;
+      --accent-strong: #ff6861;
+      --line: rgba(175, 199, 207, 0.18);
+      --shadow: 0 22px 60px rgba(0, 0, 0, 0.36);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(90deg, rgba(46, 125, 116, 0.045) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(46, 125, 116, 0.045) 1px, transparent 1px),
+        var(--bg);
+      background-size: 34px 34px, 34px 34px, auto;
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    body[data-profile="heron"] {
+      background:
+        linear-gradient(90deg, rgba(47, 111, 147, 0.07) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(47, 111, 147, 0.07) 1px, transparent 1px),
+        linear-gradient(180deg, var(--bg), var(--surface-strong));
+      background-size: 42px 42px, 42px 42px, auto;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      color: var(--surface);
+      font-weight: 800;
+      flex: 0 0 auto;
+      box-shadow: 0 10px 24px rgba(46, 125, 116, 0.22);
+    }
+
+    body[data-profile="heron"] .brand-mark {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      box-shadow: 0 10px 28px rgba(199, 53, 50, 0.18);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 34px);
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .theme-toggle {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 10px 14px;
+      cursor: pointer;
+      box-shadow: none;
+      white-space: nowrap;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    body[data-profile="heron"] .panel {
+      background:
+        linear-gradient(180deg, rgba(120, 184, 208, 0.08), transparent 38%),
+        var(--surface);
+    }
+
+    .intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent-strong);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .eyebrow::before {
+      content: "OBS ";
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    body[data-profile="heron"] .eyebrow::before {
+      content: "NYC ";
+    }
+
+    .intro h2,
+    .section h2 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .intro-copy {
+      display: grid;
+      gap: 10px;
+      margin: 16px 0 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    body[data-profile="heron"] .intro-copy p {
+      padding-left: 12px;
+      border-left: 3px solid rgba(199, 53, 50, 0.34);
+    }
+
+    .intro-copy p {
+      margin: 0;
+    }
+
+    .profile-card {
+      display: grid;
+      gap: 14px;
+    }
+
+    .avatar {
+      position: relative;
+      min-height: 260px;
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.8), transparent 20%),
+        linear-gradient(135deg, var(--accent), var(--accent-strong));
+      display: grid;
+      place-items: center;
+      color: #fffaf0;
+      text-align: center;
+      padding: 28px;
+      overflow: hidden;
+    }
+
+    .avatar img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: transparent;
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+
+    .avatar.has-image img {
+      position: static;
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 420px;
+      object-fit: contain;
+      opacity: 1;
+    }
+
+    .avatar.has-image {
+      display: block;
+      min-height: 0;
+      padding: 0;
+      background: var(--surface);
+    }
+
+    body[data-profile="heron"] .avatar.has-image {
+      border: 1px solid rgba(120, 184, 208, 0.28);
+      background: var(--surface-strong);
+    }
+
+    .avatar.has-image > div {
+      display: none;
+      opacity: 0;
+    }
+
+    .avatar span {
+      display: block;
+      font-size: 68px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .avatar small {
+      display: block;
+      margin-top: 12px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .quote-button {
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      background: var(--ink);
+      color: var(--surface);
+      cursor: pointer;
+      touch-action: manipulation;
+      user-select: none;
+    }
+
+    .quote {
+      margin: 0;
+      min-height: 48px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .section {
+      margin-top: 24px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .chart-wrap {
+      display: grid;
+      gap: 14px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr) 42px;
+      align-items: center;
+      gap: 12px;
+      min-height: 34px;
+    }
+
+    .bar-label {
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .bar-track {
+      height: 18px;
+      border-radius: 999px;
+      background: var(--surface-strong);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: var(--value);
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+      transform-origin: left center;
+      animation: grow 760ms ease both;
+    }
+
+    body[data-profile="heron"] .bar-fill {
+      background: linear-gradient(90deg, var(--accent), #8dbfd3 56%, var(--accent-strong));
+    }
+
+    .bar-value {
+      color: var(--muted);
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .egg-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .egg-tile {
+      min-height: 148px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(46, 125, 116, 0.06), transparent 42%),
+        var(--surface);
+      color: var(--ink);
+      padding: 16px;
+      text-align: left;
+      transition: transform 180ms ease, background 180ms ease;
+    }
+
+    .egg-tile:hover {
+      transform: translateY(-3px);
+      background: var(--surface-strong);
+    }
+
+    .egg-tile.unlocked {
+      border-color: color-mix(in srgb, var(--accent-strong) 48%, var(--line));
+      background:
+        linear-gradient(180deg, rgba(199, 93, 55, 0.1), transparent 42%),
+        var(--surface);
+    }
+
+    .clue-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .clue-status {
+      color: var(--accent-strong);
+    }
+
+    .egg-tile strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .egg-tile span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .clue-code {
+      margin-top: 12px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: var(--surface-strong);
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    .rhythm-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      place-items: center;
+      padding: 18px;
+      background: rgba(12, 11, 28, 0.84);
+      backdrop-filter: blur(14px);
+    }
+
+    .rhythm-overlay.open {
+      display: grid;
+    }
+
+    .rhythm-shell {
+      width: min(900px, 100%);
+      max-height: calc(100vh - 36px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 230px;
+      gap: 16px;
+      color: #fefdfe;
+      overflow: auto;
+    }
+
+    .rhythm-stage,
+    .rhythm-side {
+      border: 1px solid rgba(254, 253, 254, 0.16);
+      border-radius: 8px;
+      background: #1f1e33;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+    }
+
+    .rhythm-stage {
+      min-height: 610px;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      overflow: hidden;
+    }
+
+    .rhythm-header,
+    .rhythm-side {
+      padding: 16px;
+    }
+
+    .rhythm-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border-bottom: 1px solid rgba(254, 253, 254, 0.12);
+    }
+
+    .rhythm-header h2 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    .rhythm-header p {
+      margin: 6px 0 0;
+      color: #c4c1d9;
+      font-size: 14px;
+    }
+
+    .rhythm-actions {
+      display: flex;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .rhythm-button {
+      border: 1px solid rgba(254, 253, 254, 0.2);
+      border-radius: 8px;
+      background: #343252;
+      color: #fefdfe;
+      padding: 9px 12px;
+      cursor: pointer;
+    }
+
+    .rhythm-button.primary {
+      background: #8f8cff;
+      color: #17162a;
+      font-weight: 800;
+    }
+
+    .rhythm-board {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      min-height: 520px;
+      overflow: hidden;
+      touch-action: none;
+      user-select: none;
+      background:
+        linear-gradient(180deg, rgba(143, 140, 255, 0.18), transparent 40%),
+        radial-gradient(circle at 50% 14%, rgba(240, 161, 111, 0.24), transparent 26%),
+        #17162a;
+    }
+
+    .rhythm-lane {
+      position: relative;
+      border-left: 1px solid rgba(254, 253, 254, 0.1);
+      cursor: pointer;
+      touch-action: none;
+    }
+
+    .rhythm-lane:active {
+      background: rgba(143, 140, 255, 0.12);
+    }
+
+    .rhythm-lane:first-child {
+      border-left: 0;
+    }
+
+    .rhythm-hitline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 84px;
+      height: 3px;
+      background: #f0a16f;
+      box-shadow: 0 0 18px rgba(240, 161, 111, 0.72);
+      pointer-events: none;
+    }
+
+    .rhythm-combo-hud {
+      position: absolute;
+      left: 50%;
+      top: 18px;
+      z-index: 2;
+      transform: translateX(-50%);
+      min-width: 120px;
+      padding: 8px 14px;
+      border: 1px solid rgba(254, 253, 254, 0.18);
+      border-radius: 8px;
+      background: rgba(23, 22, 42, 0.72);
+      color: #fefdfe;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .rhythm-combo-hud small {
+      display: block;
+      margin-top: 4px;
+      color: #c4c1d9;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .rhythm-key {
+      position: absolute;
+      left: 50%;
+      bottom: 22px;
+      width: 58px;
+      height: 46px;
+      transform: translateX(-50%);
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(254, 253, 254, 0.24);
+      border-radius: 8px;
+      background: rgba(254, 253, 254, 0.08);
+      color: #fefdfe;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .rhythm-key.flash {
+      background: #8f8cff;
+      color: #17162a;
+    }
+
+    .rhythm-note {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: min(72px, calc(100% - 24px));
+      height: 22px;
+      border: 1px solid rgba(254, 253, 254, 0.45);
+      border-radius: 6px;
+      transform: translate(-50%, -100%);
+      background: linear-gradient(90deg, #fefdfe, #8f8cff);
+      box-shadow: 0 0 18px rgba(143, 140, 255, 0.72);
+      pointer-events: none;
+    }
+
+    .rhythm-judge {
+      position: absolute;
+      left: 50%;
+      bottom: 132px;
+      transform: translate(-50%, -50%);
+      min-width: 190px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 900;
+      color: #fefdfe;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .rhythm-judge.show {
+      animation: judge-pop 460ms ease both;
+    }
+
+    .rhythm-side {
+      display: grid;
+      align-content: start;
+      gap: 14px;
+    }
+
+    .rhythm-stat {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(254, 253, 254, 0.12);
+      color: #c4c1d9;
+      font-size: 14px;
+    }
+
+    .rhythm-stat strong {
+      color: #fefdfe;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .rhythm-result {
+      min-height: 74px;
+      color: #f0a16f;
+      line-height: 1.7;
+      font-weight: 700;
+    }
+
+    .rhythm-help {
+      margin: 0;
+      color: #c4c1d9;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .rhythm-file {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid rgba(254, 253, 254, 0.14);
+      border-radius: 8px;
+      background: rgba(254, 253, 254, 0.06);
+    }
+
+    .rhythm-file label {
+      color: #fefdfe;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .rhythm-file input,
+    .rhythm-file select {
+      width: 100%;
+      border: 1px solid rgba(254, 253, 254, 0.18);
+      border-radius: 8px;
+      background: #17162a;
+      color: #c4c1d9;
+      padding: 8px;
+      font-size: 13px;
+    }
+
+    .overload-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: none;
+      place-items: center;
+      overflow: hidden;
+      background: #fefdfe;
+      color: #fefdfe;
+    }
+
+    .overload-overlay.open {
+      display: grid;
+      animation: overload-bg 2400ms steps(10, end) both;
+    }
+
+    .overload-overlay::before,
+    .overload-overlay::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .overload-overlay::before {
+      background:
+        linear-gradient(90deg, rgba(254, 253, 254, 0.08) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(254, 253, 254, 0.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mix-blend-mode: screen;
+      animation: overload-grid 2200ms linear both;
+    }
+
+    .overload-overlay::after {
+      background: linear-gradient(180deg, transparent, rgba(143, 140, 255, 0.32), transparent);
+      transform: translateY(-100%);
+      animation: overload-scan 2300ms ease-in-out both;
+    }
+
+    .overload-card {
+      position: relative;
+      z-index: 1;
+      width: min(520px, calc(100% - 36px));
+      border: 1px solid rgba(254, 253, 254, 0.22);
+      border-radius: 8px;
+      padding: 28px;
+      background: rgba(15, 18, 35, 0.74);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+      text-align: center;
+      animation: overload-card 2200ms ease both;
+    }
+
+    .overload-card strong {
+      display: block;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .overload-card span {
+      display: block;
+      margin-top: 14px;
+      color: #c4c1d9;
+      font-weight: 800;
+    }
+
+    @keyframes overload-bg {
+      0% { background: #fefdfe; }
+      12% { background: #1f1e33; }
+      24% { background: #fefdfe; }
+      36% { background: #0d1720; }
+      48% { background: #fefdfe; }
+      58% { background: #1f1e33; }
+      68% { background: #fefdfe; }
+      78% { background: #0d1720; }
+      88% { background: #1f1e33; }
+      100% { background: #111827; }
+    }
+
+    @keyframes overload-grid {
+      from { transform: scale(1.08) rotate(0deg); opacity: 0; }
+      25% { opacity: 1; }
+      to { transform: scale(1) rotate(0.2deg); opacity: 0.76; }
+    }
+
+    @keyframes overload-scan {
+      0% { transform: translateY(-100%); }
+      70% { transform: translateY(100%); }
+      100% { transform: translateY(100%); }
+    }
+
+    @keyframes overload-card {
+      0% { opacity: 0; transform: translateY(12px) scale(0.96); filter: blur(8px); }
+      22% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+      42% { transform: translateX(-2px); }
+      50% { transform: translateX(2px); }
+      62% { transform: translateX(-1px); }
+      74% { transform: translateX(1px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes judge-pop {
+      0% { opacity: 0; transform: translate(-50%, 10px) scale(0.88); }
+      24% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -18px) scale(1.06); }
+    }
+
+    @keyframes grow {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    @media (max-width: 780px) {
+      .page {
+        width: min(100% - 24px, 1120px);
+        padding-top: 20px;
+      }
+
+      .topbar,
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero,
+      .egg-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .rhythm-shell {
+        grid-template-columns: 1fr;
+        max-height: calc(100vh - 20px);
+      }
+
+      .rhythm-stage {
+        min-height: min(560px, calc(100vh - 36px));
+      }
+
+      .rhythm-board {
+        min-height: min(430px, 64vh);
+      }
+
+      .rhythm-key {
+        width: min(64px, calc(100% - 12px));
+        height: 52px;
+        bottom: 16px;
+        font-size: 20px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .bar-row {
+        grid-template-columns: 72px minmax(0, 1fr) 36px;
+      }
+    }
+  </style>
+</head>
+<body data-theme="day" data-profile="personal">
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">数</div>
+        <div>
+          <h1 id="siteTitle">我的数据小馆</h1>
+          <p id="siteSubtitle">一份关于自己的真实小数据主页</p>
+        </div>
+      </div>
+      <button class="theme-toggle" type="button" id="themeToggle">切换夜间</button>
+    </header>
+
+    <section class="hero" aria-labelledby="introTitle">
+      <div class="panel intro">
+        <div>
+          <p class="eyebrow" id="profileMeta">昵称 / 专业 / 年级</p>
+          <h2 id="introTitle">先把这里改成你的个人主页标题</h2>
+          <div class="intro-copy" id="introCopy"></div>
+        </div>
+      </div>
+
+      <aside class="panel profile-card" aria-label="头像互动区">
+        <div class="avatar" id="avatarBox">
+          <img id="avatarImage" alt="" />
+          <div>
+            <span id="avatarInitial">我</span>
+            <small id="avatarText">点击下面按钮，换一句今天的吐槽。</small>
+          </div>
+        </div>
+        <button class="quote-button" type="button" id="quoteButton">换一句状态</button>
+        <p class="quote" id="quoteText"></p>
+      </aside>
+    </section>
+
+    <section class="section panel" aria-labelledby="dataTitle">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">数据可视化</p>
+          <h2 id="dataTitle">本周时间分配</h2>
+          <p id="dataNote">把下面的示例数据换成你自己的真实小数据。</p>
+        </div>
+      </div>
+      <div class="chart-wrap" id="chart" aria-label="数据条形图"></div>
+    </section>
+
+    <section class="section panel" aria-labelledby="eggTitle">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">交互彩蛋</p>
+          <h2 id="eggTitle">隐藏彩蛋提示</h2>
+        </div>
+      </div>
+      <div class="egg-grid" id="eggGrid"></div>
+    </section>
+  </main>
+
+  <div class="overload-overlay" id="overloadOverlay" aria-hidden="true">
+    <div class="overload-card">
+      <strong>昼夜过载</strong>
+      <span>DAY / NIGHT SIGNAL OVERDRIVE</span>
+    </div>
+  </div>
+
+  <div class="rhythm-overlay" id="rhythmOverlay" aria-hidden="true">
+    <div class="rhythm-shell" role="dialog" aria-modal="true" aria-labelledby="rhythmTitle">
+      <section class="rhythm-stage">
+        <header class="rhythm-header">
+          <div>
+            <h2 id="rhythmTitle">昼夜过载</h2>
+            <p>键盘 D/F/J/K 或手机点按轨道；Perfect ±60ms / Great ±90ms / Good ±120ms</p>
+          </div>
+          <div class="rhythm-actions">
+            <button class="rhythm-button primary" type="button" id="rhythmStart">开始</button>
+            <button class="rhythm-button" type="button" id="rhythmClose">关闭</button>
+          </div>
+        </header>
+        <div class="rhythm-board" id="rhythmBoard">
+          <div class="rhythm-lane" data-lane="d"><div class="rhythm-key">D</div></div>
+          <div class="rhythm-lane" data-lane="f"><div class="rhythm-key">F</div></div>
+          <div class="rhythm-lane" data-lane="j"><div class="rhythm-key">J</div></div>
+          <div class="rhythm-lane" data-lane="k"><div class="rhythm-key">K</div></div>
+          <div class="rhythm-combo-hud"><span id="rhythmComboHud">0</span><small>COMBO</small></div>
+          <div class="rhythm-hitline" aria-hidden="true"></div>
+          <div class="rhythm-judge" id="rhythmJudge" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <aside class="rhythm-side" aria-label="音游统计">
+        <div class="rhythm-stat"><span>Score</span><strong id="rhythmScore">0</strong></div>
+        <div class="rhythm-stat"><span>Combo</span><strong id="rhythmCombo">0</strong></div>
+        <div class="rhythm-stat"><span>Perfect</span><strong id="rhythmPerfect">0</strong></div>
+        <div class="rhythm-stat"><span>Great</span><strong id="rhythmGreat">0</strong></div>
+        <div class="rhythm-stat"><span>Good</span><strong id="rhythmGood">0</strong></div>
+        <div class="rhythm-stat"><span>Miss</span><strong id="rhythmMiss">0</strong></div>
+        <div class="rhythm-stat"><span>Avg Error</span><strong id="rhythmError">0ms</strong></div>
+        <div class="rhythm-stat"><span>Offset</span><strong id="rhythmOffset">0ms</strong></div>
+        <p class="rhythm-help">玩法：note 底边碰到判定线时，按 D/F/J/K 或点对应轨道；手机建议先点“延迟校准”。</p>
+        <div class="rhythm-file">
+          <label for="rhythmDifficulty">难度</label>
+          <select id="rhythmDifficulty">
+            <option value="easy">Easy</option>
+            <option value="normal" selected>Normal</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+        <button class="rhythm-button" type="button" id="rhythmCalibrate">延迟校准</button>
+        <div class="rhythm-file">
+          <label for="rhythmFile">选择 BGM</label>
+          <input id="rhythmFile" type="file" accept="audio/*" />
+        </div>
+        <div class="rhythm-result" id="rhythmResult">快速点击日夜切换按钮 5 次可以再次进入这里。</div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const profile = {
+      title: "我的数据小馆",
+      subtitle: "用真实小数据展示一个具体的我",
+      meta: "赵懿喆 / 智能感知工程 / 2024级",
+      introTitle: "把生活切成几块，再看见自己的节奏",
+      introLines: [
+        "实验苦手，被嵌入式折磨一学期。我不想做嵌入式大作业！",
+        "半个书痴，然而是轻小说书痴。这学期去图书馆都是在找轻小说",
+        "音游爱好者，享受指尖的律动和敲击的节奏，但也经常越级最后被虐得体无完肤。",
+        "观鸟区的一员，没有专业知识但很喜欢鸟，尤其是夜鹭这种长得像大蠊的蓝色水鸟。"
+      ],
+      image: "assets/me.jpg",
+      avatarInitial: "你",
+      avatarText: "这里可以换成一张图片；当前版本用文字头像保证离线可打开。",
+      quotes: [
+        "今天的状态：苦战嵌入式。",
+        "今天的状态：翻轻小说中",
+        "今天的状态：越级打歌中。",
+        "今天的状态：追踪夜鹭中。"
+      ]
+    };
+
+    const nightHeronProfile = {
+      title: "夜鹭的数据小馆",
+      subtitle: "长按状态按钮后出现的隐藏档案",
+      meta: "夜鹭 / 中华田园企鹅 / 夜师傅",
+      introTitle: "鸟中生姜，万物皆可cos",
+      introLines: [
+        "夜鹭常在傍晚和夜间活动，当然白天也能到处看到它。",
+        "它有蓝色翅背，繁殖期会长出两条繁殖羽，看起来像一只蓝背大蠊。",
+        "它的捕食方式很有耐心：站定、观察、出击；但在外人看来它就是在沉思",
+        "它能cos各种鸟类，甚至不止鸟类。你看到的任何东西都有可能是它",
+        "它会随地排泄(挤洗手液)，交大的“天使路”就是它装点的",
+        "如果这个页面突然变成它的档案，说明你找到了一个真正藏起来的入口。"
+      ],
+      image: "assets/night-heron.jpg",
+      avatarInitial: "鹭",
+      avatarText: "夜鹭档案已开启。再长按状态按钮可以返回原页面。",
+      quotes: [
+        "夜鹭状态：呱！",
+        "夜鹭状态：挤洗手液",
+        "夜鹭状态：吃泥鳅",
+        "夜鹭状态：伸缩脖"
+      ]
+    };
+
+    const personalChartData = {
+      title: "本周时间分配",
+      note: "示例单位是小时。",
+      points: [
+        { label: "课程", value: 20 },
+        { label: "作业", value: 10 },
+        { label: "音游", value: 8 },
+        { label: "观鸟", value: 1 },
+        { label: "阅读", value: 4 }
+      ]
+    };
+
+    const nightHeronChartData = {
+      title: "夜鹭一日活动强度",
+      note: "示例数据表示观测到的频率相对高低",
+      points: [
+        { label: "伸缩脖", value: 85 },
+        { label: "挤洗手液", value: 40 },
+        { label: "无意义摇摆", value: 53 },
+        { label: "水边沉思", value: 100 },
+        { label: "阴暗爬行", value: 76 }
+      ]
+    };
+
+    const eggCards = [
+      {
+        id: "audio",
+        code: "CLUE-01",
+        title: "断续的字母",
+        text: "有些门不需要鼠标，只需要按下像水波一样断开的字母。",
+        hint: "x _ x _ xxx",
+        unlockedText: "键盘暗号已破译"
+      },
+      {
+        id: "rhythm",
+        code: "CLUE-02",
+        title: "昼夜失控",
+        text: "如果白天和夜晚被拨动得太快，页面会进入另一个控制台。",
+        hint: "DAY/NIGHT x 5",
+        unlockedText: "昼夜过载已启动"
+      },
+      {
+        id: "heron",
+        code: "CLUE-03",
+        title: "静候夜鹭",
+        text: "有些状态不是点出来的，而是等出来的。",
+        hint: "HOLD STATUS",
+        unlockedText: "夜鹭档案已开启"
+      }
+    ];
+
+    const rhythmMusic = {
+      src: "assets/bgm.mp3",
+      startSeconds: 77,
+      endSeconds: 109,
+      bpm: 181.2,
+      firstBeatSeconds: 0.55,
+      chartOffsetMs: 0
+    };
+
+    const rhythmParsedOnsets = [
+      1160, 1836, 2511, 3187, 3863, 4538, 5214, 5890,
+      6566, 7314, 7988, 8847, 9451, 10031, 10449, 10867,
+      11308, 11981, 12655, 12980, 13328, 13839, 14675, 15186,
+      15673, 16022, 16370, 16695, 17043, 17392, 17879, 18390,
+      18739, 19249, 19551, 19900, 20085, 20410, 20573, 20759,
+      21084, 21246, 21432, 21595, 21780, 21943, 22105, 22268,
+      22430, 22616, 22779, 22941, 23104, 23266, 23452, 23800,
+      23963, 24126, 24288, 24474, 24636, 24799, 24961, 25147,
+      25310, 25496, 25658, 25983, 26169, 26494, 26657, 26842,
+      27167, 27330, 27516, 27841, 28003, 28189, 28352, 28514,
+      28677, 28862, 29211, 29536, 29698, 29884, 30047, 30209,
+      30557, 30720, 30883, 31045, 31231, 31393
+    ];
+
+    let rhythmDifficulty = "normal";
+    let rhythmChart = buildRhythmChart(rhythmDifficulty);
+
+    const themeRoot = document.body;
+    const themeToggle = document.querySelector("#themeToggle");
+    const quoteText = document.querySelector("#quoteText");
+    const quoteButton = document.querySelector("#quoteButton");
+    const secretCode = "x x xxx";
+    const secretAudio = new Audio("assets/secret-audio.mp3");
+    const rhythmBgm = new Audio(rhythmMusic.src);
+    let generatedAudioContext = null;
+    let keyBuffer = "";
+    let quoteIndex = 0;
+    let rhythmObjectUrl = "";
+    let activeProfile = profile;
+    let activeChartData = personalChartData;
+    let nightHeronMode = false;
+    let profileHoldTimer = null;
+    let profileHoldTriggered = false;
+    const unlockedClues = new Set();
+
+    secretAudio.preload = "auto";
+    rhythmBgm.preload = "auto";
+
+    const rhythmOverlay = document.querySelector("#rhythmOverlay");
+    const overloadOverlay = document.querySelector("#overloadOverlay");
+    const rhythmBoard = document.querySelector("#rhythmBoard");
+    const rhythmJudge = document.querySelector("#rhythmJudge");
+    const rhythmStart = document.querySelector("#rhythmStart");
+    const rhythmClose = document.querySelector("#rhythmClose");
+    const rhythmCalibrate = document.querySelector("#rhythmCalibrate");
+    const rhythmFile = document.querySelector("#rhythmFile");
+    const rhythmDifficultySelect = document.querySelector("#rhythmDifficulty");
+    const rhythmStats = {
+      score: document.querySelector("#rhythmScore"),
+      combo: document.querySelector("#rhythmCombo"),
+      comboHud: document.querySelector("#rhythmComboHud"),
+      perfect: document.querySelector("#rhythmPerfect"),
+      great: document.querySelector("#rhythmGreat"),
+      good: document.querySelector("#rhythmGood"),
+      miss: document.querySelector("#rhythmMiss"),
+      error: document.querySelector("#rhythmError"),
+      offset: document.querySelector("#rhythmOffset"),
+      result: document.querySelector("#rhythmResult")
+    };
+    const rhythmKeys = ["d", "f", "j", "k"];
+    const rhythmHitWindows = { perfect: 60, great: 90, good: 120 };
+    const rhythmApproachMs = 650;
+    let themeTapTimes = [];
+    let overloadRunning = false;
+    let rhythmState = createRhythmState();
+    let rhythmInputOffsetMs = loadRhythmOffset();
+    let calibrationState = createCalibrationState();
+
+    function buildRhythmChart(difficulty = "normal") {
+      if (difficulty === "hard") {
+        return buildHardRhythmChart();
+      }
+
+      const notes = [];
+      const earlyPattern = difficulty === "easy"
+        ? ["d", "j", "f", "k"]
+        : ["d", "f", "j", "k", "f", "j"];
+      const stairUp = ["d", "f", "j", "k"];
+      const stairDown = ["k", "j", "f", "d"];
+      const hardEarlyTrills = [
+        "d", "d", "f", "j",
+        "k", "k", "j", "f",
+        "d", "f", "f", "j",
+        "k", "j", "j", "f"
+      ];
+      const hardMidPatterns = [
+        ["d"], ["f"], ["j"], ["k"],
+        ["k"], ["j"], ["f"], ["d"],
+        ["d"], ["d"], ["f"], ["j"],
+        ["k"], ["k"], ["j"], ["f"],
+        ["d", "k"], ["f"], ["j"], ["f", "j"],
+        ["d", "f"], ["j"], ["k"], ["j", "k"]
+      ];
+      const hardSpiralPatterns = [
+        ["d"], ["f"], ["j"], ["f"],
+        ["k"], ["j"], ["f", "j"], ["j"],
+        ["d"], ["j"], ["k"], ["f"],
+        ["d", "k"], ["f"], ["j", "k"], ["f", "j"],
+        ["k"], ["f"], ["d", "f"], ["j"],
+        ["f", "k"], ["j"], ["d", "k"], ["d", "j"],
+        ["d"], ["f", "j"], ["k"], ["d", "k"]
+      ];
+      const keyOrder = ["d", "f", "j", "k"];
+      let lateIndex = 0;
+      let acceptedIndex = 0;
+      let midIndex = 0;
+
+      rhythmParsedOnsets.forEach((time, index) => {
+        let keys;
+
+        if (difficulty === "easy" && time > 12000 && time < 20000 && index % 2 === 1) {
+          return;
+        }
+
+        if (difficulty === "easy" && time >= 20000 && index % 3 === 1) {
+          return;
+        }
+
+        if (difficulty === "hard" && time < 12000) {
+          keys = [hardEarlyTrills[acceptedIndex % hardEarlyTrills.length]];
+        } else if (time < 12000) {
+          keys = [earlyPattern[acceptedIndex % earlyPattern.length]];
+        } else if (difficulty === "hard" && time < 20000) {
+          keys = hardMidPatterns[midIndex % hardMidPatterns.length];
+          midIndex += 1;
+        } else if (time < 20000) {
+          const stair = Math.floor(acceptedIndex / 4) % 2 === 0 ? stairUp : stairDown;
+          keys = [stair[acceptedIndex % stair.length]];
+        } else {
+          const easyLatePatterns = [
+            ["d"], ["f"], ["j"], ["k"],
+            ["j"], ["f"], ["d"], ["k"]
+          ];
+          const normalLatePatterns = [
+            ["d"], ["f"], ["j"], ["k"],
+            ["d", "k"], ["j"], ["f"], ["f", "j"],
+            ["k"], ["j"], ["f"], ["d"],
+            ["d", "j"], ["f"], ["k"], ["d", "k"]
+          ];
+          const hardLatePatterns = [
+            ...hardSpiralPatterns
+          ];
+          const latePatterns = difficulty === "easy"
+            ? easyLatePatterns
+            : difficulty === "hard"
+              ? hardLatePatterns
+              : normalLatePatterns;
+          keys = latePatterns[lateIndex % latePatterns.length];
+          lateIndex += 1;
+        }
+
+        keys.forEach((key) => {
+          notes.push({ time: time + rhythmMusic.chartOffsetMs, key });
+        });
+
+        if (difficulty === "hard" && time < 12000) {
+          const nextTime = rhythmParsedOnsets[index + 1] || Infinity;
+          const repeatGap = nextTime - time;
+          if (repeatGap > 300) {
+            const repeatKey = keys[0];
+            notes.push({ time: time + 160 + rhythmMusic.chartOffsetMs, key: repeatKey });
+          }
+        }
+
+        acceptedIndex += 1;
+      });
+
+      return notes.sort((a, b) => {
+        if (a.time !== b.time) return a.time - b.time;
+        return keyOrder.indexOf(a.key) - keyOrder.indexOf(b.key);
+      });
+    }
+
+    function buildHardRhythmChart() {
+      const notes = [];
+      const keyOrder = ["d", "f", "j", "k"];
+      const eighthMs = 60000 / rhythmMusic.bpm / 2;
+      const earlyAnchors = rhythmParsedOnsets.filter((time) => time < 9000);
+      const midStart = 11981;
+      const midEnd = 19900;
+      const midStairs = [
+        ["d", "f", "j", "k"],
+        ["k", "j", "f", "d"],
+        ["d", "f", "d", "f"],
+        ["j", "k", "j", "k"],
+        ["d", "j", "f", "k"],
+        ["k", "f", "j", "d"]
+      ];
+      const lateSpiral = [
+        ["d"], ["f"], ["j"], ["f"],
+        ["k"], ["j"], ["f", "j"], ["j"],
+        ["d"], ["j"], ["k"], ["f"],
+        ["d", "k"], ["f"], ["j", "k"], ["f", "j"],
+        ["k"], ["f"], ["d", "f"], ["j"],
+        ["f", "k"], ["j"], ["d", "k"], ["d", "j"],
+        ["d"], ["f", "j"], ["k"], ["d", "k"]
+      ];
+      const endingCuts = [
+        ["d", "k"], ["f"], ["j", "k"], ["d"],
+        ["f", "j"], ["k"], ["d", "f"], ["j"],
+        ["d", "j"], ["f", "k"], ["d"], ["k"],
+        ["d", "k"], ["f", "j"], ["d", "f"], ["j", "k"]
+      ];
+
+      earlyAnchors.forEach((anchor, groupIndex) => {
+        const key = keyOrder[groupIndex % keyOrder.length];
+        for (let step = 0; step < 4; step += 1) {
+          notes.push({
+            time: Math.round(anchor + step * eighthMs + rhythmMusic.chartOffsetMs),
+            key
+          });
+        }
+      });
+
+      for (let time = 9451, step = 0; time < midStart; time += eighthMs, step += 1) {
+        const bridgePattern = ["d", "f", "j", "k", "k", "j", "f", "d"];
+        notes.push({
+          time: Math.round(time + rhythmMusic.chartOffsetMs),
+          key: bridgePattern[step % bridgePattern.length]
+        });
+      }
+
+      for (let time = midStart, step = 0; time <= midEnd; time += eighthMs, step += 1) {
+        const phrase = midStairs[Math.floor(step / 8) % midStairs.length];
+        const key = phrase[step % phrase.length];
+        notes.push({
+          time: Math.round(time + rhythmMusic.chartOffsetMs),
+          key
+        });
+
+        if (step % 16 === 12) {
+          const pair = key === "d" || key === "k" ? ["d", "k"] : ["f", "j"];
+          pair.forEach((pairKey) => {
+            if (pairKey !== key) {
+              notes.push({
+                time: Math.round(time + rhythmMusic.chartOffsetMs),
+                key: pairKey
+              });
+            }
+          });
+        }
+      }
+
+      let lateIndex = 0;
+      let endingIndex = 0;
+      rhythmParsedOnsets
+        .filter((time) => time >= 20000)
+        .forEach((time) => {
+          const pattern = time >= 28000
+            ? endingCuts[endingIndex++ % endingCuts.length]
+            : lateSpiral[lateIndex++ % lateSpiral.length];
+
+          pattern.forEach((key) => {
+            notes.push({ time: time + rhythmMusic.chartOffsetMs, key });
+          });
+        });
+
+      return notes.sort((a, b) => {
+        if (a.time !== b.time) return a.time - b.time;
+        return keyOrder.indexOf(a.key) - keyOrder.indexOf(b.key);
+      });
+    }
+
+    function renderProfile(profileData = activeProfile) {
+      const avatarBox = document.querySelector("#avatarBox");
+      const avatarImage = document.querySelector("#avatarImage");
+      document.querySelector("#siteTitle").textContent = profileData.title;
+      document.querySelector("#siteSubtitle").textContent = profileData.subtitle;
+      document.querySelector("#profileMeta").textContent = profileData.meta;
+      document.querySelector("#introTitle").textContent = profileData.introTitle;
+      document.querySelector("#avatarInitial").textContent = profileData.avatarInitial;
+      document.querySelector("#avatarText").textContent = profileData.avatarText;
+      avatarBox.classList.remove("has-image");
+      avatarImage.removeAttribute("src");
+      avatarImage.alt = profileData.avatarText || profileData.avatarInitial || "";
+
+      if (profileData.image) {
+        avatarImage.onload = () => {
+          avatarBox.classList.add("has-image");
+        };
+        avatarImage.onerror = () => {
+          avatarBox.classList.remove("has-image");
+          avatarImage.removeAttribute("src");
+        };
+        avatarImage.src = profileData.image;
+      }
+
+      document.querySelector("#introCopy").innerHTML = profileData.introLines
+        .map((line) => `<p>${line}</p>`)
+        .join("");
+      quoteText.textContent = profileData.quotes[0];
+    }
+
+    function toggleNightHeronProfile() {
+      nightHeronMode = !nightHeronMode;
+      activeProfile = nightHeronMode ? nightHeronProfile : profile;
+      activeChartData = nightHeronMode ? nightHeronChartData : personalChartData;
+      document.body.dataset.profile = nightHeronMode ? "heron" : "personal";
+      quoteIndex = 0;
+      renderProfile(activeProfile);
+      renderChart(activeChartData);
+      quoteText.textContent = nightHeronMode
+        ? "隐藏档案已开启：夜鹭接管了这个介绍页。"
+        : "已返回原来的个人主页。";
+      if (nightHeronMode) {
+        unlockClue("heron");
+      }
+    }
+
+    function renderChart(chartData = activeChartData) {
+      document.querySelector("#dataTitle").textContent = chartData.title;
+      document.querySelector("#dataNote").textContent = chartData.note;
+      const maxValue = Math.max(...chartData.points.map((item) => item.value));
+      document.querySelector("#chart").innerHTML = chartData.points
+        .map((item) => {
+          const percent = Math.max(6, Math.round((item.value / maxValue) * 100));
+          return `
+            <div class="bar-row">
+              <div class="bar-label">${item.label}</div>
+              <div class="bar-track"><div class="bar-fill" style="--value: ${percent}%"></div></div>
+              <div class="bar-value">${item.value}</div>
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    function renderEggCards() {
+      const eggGrid = document.querySelector("#eggGrid");
+      eggGrid.innerHTML = eggCards
+        .map((card) => `
+          <article class="egg-tile ${unlockedClues.has(card.id) ? "unlocked" : ""}">
+            <div class="clue-meta">
+              <span>${card.code}</span>
+              <span class="clue-status">${unlockedClues.has(card.id) ? "已解锁" : "未破译"}</span>
+            </div>
+            <strong>${unlockedClues.has(card.id) ? card.unlockedText : card.title}</strong>
+            <span>${card.text}</span>
+            <div class="clue-code">${card.hint}</div>
+          </article>
+        `)
+        .join("");
+    }
+
+    function unlockClue(id) {
+      if (unlockedClues.has(id)) return;
+      unlockedClues.add(id);
+      renderEggCards();
+    }
+
+    function createRhythmState() {
+      return {
+        active: false,
+        playing: false,
+        startAt: 0,
+        frameId: null,
+        score: 0,
+        combo: 0,
+        maxCombo: 0,
+        totalError: 0,
+        hitCount: 0,
+        notes: [],
+        counts: { perfect: 0, great: 0, good: 0, miss: 0 }
+      };
+    }
+
+    function createCalibrationState() {
+      return {
+        active: false,
+        startAt: 0,
+        beatMs: 500,
+        beatCount: 8,
+        beatTimes: [],
+        taps: [],
+        audioContext: null,
+        finishTimer: null
+      };
+    }
+
+    function loadRhythmOffset() {
+      try {
+        return Number(localStorage.getItem("rhythmInputOffsetMs")) || 0;
+      } catch {
+        return 0;
+      }
+    }
+
+    function saveRhythmOffset(value) {
+      try {
+        localStorage.setItem("rhythmInputOffsetMs", String(value));
+      } catch {
+        // Some mobile browsers block localStorage for local files.
+      }
+    }
+
+    function resetRhythmGame() {
+      if (rhythmState.frameId) {
+        cancelAnimationFrame(rhythmState.frameId);
+      }
+
+      stopRhythmMusic();
+      document.querySelectorAll(".rhythm-note").forEach((note) => note.remove());
+      rhythmState = createRhythmState();
+      rhythmState.active = rhythmOverlay.classList.contains("open");
+      rhythmState.notes = rhythmChart.map((note, index) => ({
+        ...note,
+        id: index,
+        judged: false,
+        element: null
+      }));
+      rhythmJudge.classList.remove("show");
+      rhythmStats.result.textContent = "Ready";
+      updateRhythmStats();
+    }
+
+    function setRhythmDifficulty(difficulty) {
+      rhythmDifficulty = difficulty;
+      rhythmChart = buildRhythmChart(rhythmDifficulty);
+      resetRhythmGame();
+      rhythmStats.result.textContent = `${difficulty.toUpperCase()}：${rhythmChart.length} notes`;
+    }
+
+    function updateRhythmStats() {
+      rhythmStats.score.textContent = rhythmState.score;
+      rhythmStats.combo.textContent = rhythmState.combo;
+      rhythmStats.comboHud.textContent = rhythmState.combo;
+      rhythmStats.perfect.textContent = rhythmState.counts.perfect;
+      rhythmStats.great.textContent = rhythmState.counts.great;
+      rhythmStats.good.textContent = rhythmState.counts.good;
+      rhythmStats.miss.textContent = rhythmState.counts.miss;
+      const averageError = rhythmState.hitCount
+        ? Math.round(rhythmState.totalError / rhythmState.hitCount)
+        : 0;
+      rhythmStats.error.textContent = `${averageError}ms`;
+      rhythmStats.offset.textContent = `${rhythmInputOffsetMs >= 0 ? "+" : ""}${Math.round(rhythmInputOffsetMs)}ms`;
+    }
+
+    function openRhythmGame() {
+      stopSecretSound(false);
+      rhythmOverlay.classList.add("open");
+      rhythmOverlay.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      resetRhythmGame();
+      rhythmStart.focus();
+      quoteText.textContent = "隐藏音游已解锁：昼夜切换过载。";
+    }
+
+    function startOverloadTransition() {
+      if (overloadRunning) return;
+
+      overloadRunning = true;
+      unlockClue("rhythm");
+      stopSecretSound(false);
+      overloadOverlay.classList.add("open");
+      overloadOverlay.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+
+      window.setTimeout(() => {
+        overloadOverlay.classList.remove("open");
+        overloadOverlay.setAttribute("aria-hidden", "true");
+        overloadRunning = false;
+        openRhythmGame();
+      }, 2420);
+    }
+
+    function closeRhythmGame() {
+      if (rhythmState.frameId) {
+        cancelAnimationFrame(rhythmState.frameId);
+      }
+
+      rhythmState.playing = false;
+      rhythmState.active = false;
+      stopLatencyCalibration(false);
+      rhythmOverlay.classList.remove("open");
+      rhythmOverlay.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      document.querySelectorAll(".rhythm-note").forEach((note) => note.remove());
+      stopRhythmMusic();
+    }
+
+    function startRhythmGame() {
+      stopLatencyCalibration(false);
+      resetRhythmGame();
+      rhythmState.active = true;
+      rhythmStats.result.textContent = "Loading";
+      playRhythmMusic().then((musicReady) => {
+        if (!rhythmState.active) return;
+        rhythmState.playing = true;
+        rhythmState.startAt = performance.now();
+        rhythmStats.result.textContent = musicReady
+          ? "Go"
+          : "Go（未检测到 assets/bgm.mp3，当前为无音乐练习）";
+        rhythmState.frameId = requestAnimationFrame(updateRhythmGame);
+      });
+    }
+
+    function updateRhythmGame(now) {
+      if (!rhythmState.playing) return;
+
+      const elapsed = getRhythmElapsed(now);
+      const boardHeight = rhythmBoard.clientHeight;
+      const spawnY = 24;
+      const targetY = boardHeight - 84;
+
+      rhythmState.notes.forEach((note) => {
+        if (note.judged) return;
+        const targetTime = getAdjustedNoteTime(note);
+
+        if (elapsed > targetTime + rhythmHitWindows.good) {
+          judgeRhythmNote(note, "miss", null);
+          return;
+        }
+
+        if (elapsed < targetTime - rhythmApproachMs) return;
+
+        if (!note.element) {
+          note.element = document.createElement("div");
+          note.element.className = "rhythm-note";
+          document.querySelector(`.rhythm-lane[data-lane="${note.key}"]`).appendChild(note.element);
+        }
+
+        const progress = Math.min(1.08, Math.max(0, (elapsed - targetTime + rhythmApproachMs) / rhythmApproachMs));
+        const y = spawnY + (targetY - spawnY) * progress;
+        note.element.style.top = `${y}px`;
+      });
+
+      const lastNoteTime = getAdjustedNoteTime(rhythmChart[rhythmChart.length - 1]);
+      if (elapsed > lastNoteTime + 900 || rhythmBgm.currentTime >= rhythmMusic.endSeconds) {
+        finishRhythmGame();
+        return;
+      }
+
+      rhythmState.frameId = requestAnimationFrame(updateRhythmGame);
+    }
+
+    function judgeRhythmNote(note, level, error) {
+      note.judged = true;
+      if (note.element) {
+        note.element.remove();
+        note.element = null;
+      }
+
+      if (level === "miss") {
+        rhythmState.counts.miss += 1;
+        rhythmState.combo = 0;
+        showRhythmJudge("Miss");
+      } else {
+        const scoreMap = { perfect: 1000, great: 700, good: 400 };
+        rhythmState.counts[level] += 1;
+        rhythmState.score += scoreMap[level] + rhythmState.combo * 10;
+        rhythmState.combo += 1;
+        rhythmState.maxCombo = Math.max(rhythmState.maxCombo, rhythmState.combo);
+        rhythmState.totalError += Math.abs(error);
+        rhythmState.hitCount += 1;
+        showRhythmJudge(`${level.toUpperCase()} ${error > 0 ? "+" : ""}${Math.round(error)}ms`);
+      }
+
+      updateRhythmStats();
+    }
+
+    function handleRhythmKey(key) {
+      if (!rhythmState.playing || !rhythmKeys.includes(key)) return false;
+
+      flashRhythmKey(key);
+      const elapsed = getRhythmElapsed(performance.now());
+      const candidates = rhythmState.notes
+        .filter((note) => !note.judged && note.key === key)
+        .map((note) => ({ note, error: elapsed - getAdjustedNoteTime(note) }))
+        .sort((a, b) => Math.abs(a.error) - Math.abs(b.error));
+
+      if (!candidates.length) return true;
+
+      const closest = candidates[0];
+      const absError = Math.abs(closest.error);
+      if (absError <= rhythmHitWindows.perfect) {
+        judgeRhythmNote(closest.note, "perfect", closest.error);
+      } else if (absError <= rhythmHitWindows.great) {
+        judgeRhythmNote(closest.note, "great", closest.error);
+      } else if (absError <= rhythmHitWindows.good) {
+        judgeRhythmNote(closest.note, "good", closest.error);
+      } else if (closest.error > rhythmHitWindows.good) {
+        judgeRhythmNote(closest.note, "miss", closest.error);
+      }
+
+      return true;
+    }
+
+    function showRhythmJudge(text) {
+      rhythmJudge.textContent = text;
+      rhythmJudge.classList.remove("show");
+      void rhythmJudge.offsetWidth;
+      rhythmJudge.classList.add("show");
+    }
+
+    function flashRhythmKey(key) {
+      const keyElement = document.querySelector(`.rhythm-lane[data-lane="${key}"] .rhythm-key`);
+      if (!keyElement) return;
+      keyElement.classList.add("flash");
+      window.setTimeout(() => keyElement.classList.remove("flash"), 110);
+    }
+
+    function finishRhythmGame() {
+      rhythmState.playing = false;
+      if (rhythmState.frameId) {
+        cancelAnimationFrame(rhythmState.frameId);
+      }
+      stopRhythmMusic(false);
+
+      const averageError = rhythmState.hitCount
+        ? Math.round(rhythmState.totalError / rhythmState.hitCount)
+        : 0;
+      rhythmStats.result.textContent = `完成：${rhythmState.score} 分 / Max Combo ${rhythmState.maxCombo} / 平均误差 ${averageError}ms`;
+    }
+
+    function getRhythmElapsed(now) {
+      if (!rhythmBgm.paused && rhythmBgm.currentTime >= rhythmMusic.startSeconds) {
+        return (rhythmBgm.currentTime - rhythmMusic.startSeconds) * 1000;
+      }
+
+      return now - rhythmState.startAt;
+    }
+
+    function getAdjustedNoteTime(note) {
+      return note.time + rhythmInputOffsetMs;
+    }
+
+    function playRhythmMusic() {
+      rhythmBgm.pause();
+      rhythmBgm.currentTime = rhythmMusic.startSeconds;
+      return rhythmBgm.play()
+        .then(() => true)
+        .catch(() => false);
+    }
+
+    function stopRhythmMusic(resetToStart = true) {
+      rhythmBgm.pause();
+      if (resetToStart) {
+        rhythmBgm.currentTime = rhythmMusic.startSeconds;
+      }
+    }
+
+    function startLatencyCalibration() {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) {
+        rhythmStats.result.textContent = "当前浏览器不支持音频校准。";
+        return;
+      }
+
+      if (rhythmState.frameId) {
+        cancelAnimationFrame(rhythmState.frameId);
+      }
+
+      rhythmState.playing = false;
+      stopRhythmMusic();
+      document.querySelectorAll(".rhythm-note").forEach((note) => note.remove());
+      stopLatencyCalibration(false);
+
+      calibrationState = createCalibrationState();
+      calibrationState.active = true;
+      calibrationState.audioContext = new AudioContext();
+      calibrationState.startAt = performance.now() + 850;
+      calibrationState.beatTimes = Array.from(
+        { length: calibrationState.beatCount },
+        (_, index) => calibrationState.startAt + index * calibrationState.beatMs
+      );
+
+      const audioStartAt = calibrationState.audioContext.currentTime + 0.85;
+      calibrationState.beatTimes.forEach((_, index) => {
+        const startAt = audioStartAt + index * (calibrationState.beatMs / 1000);
+        const oscillator = calibrationState.audioContext.createOscillator();
+        const gain = calibrationState.audioContext.createGain();
+
+        oscillator.type = "square";
+        oscillator.frequency.setValueAtTime(index % 4 === 0 ? 880 : 660, startAt);
+        gain.gain.setValueAtTime(0, startAt);
+        gain.gain.linearRampToValueAtTime(index % 4 === 0 ? 0.22 : 0.14, startAt + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.001, startAt + 0.08);
+
+        oscillator.connect(gain);
+        gain.connect(calibrationState.audioContext.destination);
+        oscillator.start(startAt);
+        oscillator.stop(startAt + 0.09);
+      });
+
+      rhythmStats.result.textContent = "校准中：听到每一拍就点任意轨道或按空格。";
+      calibrationState.finishTimer = window.setTimeout(
+        finishLatencyCalibration,
+        850 + calibrationState.beatMs * calibrationState.beatCount + 650
+      );
+    }
+
+    function registerCalibrationTap() {
+      if (!calibrationState.active) return false;
+
+      const now = performance.now();
+      const beat = calibrationState.beatTimes
+        .map((time) => ({ time, error: now - time }))
+        .filter((item) => Math.abs(item.error) <= 260)
+        .sort((a, b) => Math.abs(a.error) - Math.abs(b.error))[0];
+
+      if (!beat) return true;
+
+      calibrationState.taps.push(beat.error);
+      rhythmStats.result.textContent = `校准中：${calibrationState.taps.length}/${calibrationState.beatCount}，最近误差 ${Math.round(beat.error)}ms`;
+      showRhythmJudge(`${beat.error > 0 ? "+" : ""}${Math.round(beat.error)}ms`);
+      return true;
+    }
+
+    function finishLatencyCalibration() {
+      if (!calibrationState.active) return;
+
+      if (calibrationState.taps.length >= 3) {
+        const sorted = [...calibrationState.taps].sort((a, b) => a - b);
+        const trimmed = sorted.length >= 5 ? sorted.slice(1, -1) : sorted;
+        const average = trimmed.reduce((sum, value) => sum + value, 0) / trimmed.length;
+        rhythmInputOffsetMs = Math.round(average);
+        saveRhythmOffset(rhythmInputOffsetMs);
+        rhythmStats.result.textContent = `校准完成：Offset ${rhythmInputOffsetMs >= 0 ? "+" : ""}${rhythmInputOffsetMs}ms，已应用到判定。`;
+      } else {
+        rhythmStats.result.textContent = "校准失败：有效点击太少，请再试一次。";
+      }
+
+      stopLatencyCalibration(false);
+      updateRhythmStats();
+    }
+
+    function stopLatencyCalibration(showMessage = true) {
+      if (calibrationState.finishTimer) {
+        window.clearTimeout(calibrationState.finishTimer);
+      }
+
+      if (calibrationState.audioContext) {
+        calibrationState.audioContext.close();
+      }
+
+      calibrationState = createCalibrationState();
+      if (showMessage) {
+        rhythmStats.result.textContent = "校准已停止。";
+      }
+    }
+
+    function loadRhythmFile(file) {
+      if (!file) return;
+
+      if (rhythmObjectUrl) {
+        URL.revokeObjectURL(rhythmObjectUrl);
+      }
+
+      rhythmObjectUrl = URL.createObjectURL(file);
+      rhythmBgm.pause();
+      rhythmBgm.src = rhythmObjectUrl;
+      rhythmBgm.load();
+      rhythmStats.result.textContent = `已加载：${file.name}`;
+    }
+
+    function registerThemeTap() {
+      const now = performance.now();
+      themeTapTimes = themeTapTimes.filter((time) => now - time <= 2000);
+      themeTapTimes.push(now);
+
+      if (themeTapTimes.length >= 5) {
+        themeTapTimes = [];
+        startOverloadTransition();
+      }
+    }
+
+    quoteButton.addEventListener("pointerdown", () => {
+      profileHoldTriggered = false;
+      window.clearTimeout(profileHoldTimer);
+      profileHoldTimer = window.setTimeout(() => {
+        profileHoldTriggered = true;
+        toggleNightHeronProfile();
+      }, 900);
+    });
+
+    quoteButton.addEventListener("pointerup", () => {
+      window.clearTimeout(profileHoldTimer);
+    });
+
+    quoteButton.addEventListener("pointerleave", () => {
+      window.clearTimeout(profileHoldTimer);
+    });
+
+    quoteButton.addEventListener("click", (event) => {
+      if (profileHoldTriggered) {
+        event.preventDefault();
+        profileHoldTriggered = false;
+        return;
+      }
+
+      quoteIndex = (quoteIndex + 1) % activeProfile.quotes.length;
+      quoteText.textContent = activeProfile.quotes[quoteIndex];
+    });
+
+    themeToggle.addEventListener("click", () => {
+      const isNight = themeRoot.dataset.theme === "night";
+      themeRoot.dataset.theme = isNight ? "day" : "night";
+      themeToggle.textContent = isNight ? "切换夜间" : "切换日间";
+      registerThemeTap();
+    });
+
+    rhythmStart.addEventListener("click", startRhythmGame);
+    rhythmClose.addEventListener("click", closeRhythmGame);
+    rhythmCalibrate.addEventListener("click", startLatencyCalibration);
+    rhythmDifficultySelect.addEventListener("change", (event) => {
+      setRhythmDifficulty(event.target.value);
+    });
+    rhythmFile.addEventListener("change", (event) => {
+      loadRhythmFile(event.target.files[0]);
+    });
+    rhythmBoard.addEventListener("pointerdown", (event) => {
+      if (!rhythmState.active) return;
+
+      const lane = event.target.closest(".rhythm-lane");
+      if (!lane) return;
+
+      event.preventDefault();
+      if (registerCalibrationTap()) return;
+      handleRhythmKey(lane.dataset.lane);
+    });
+    window.addEventListener("beforeunload", () => {
+      if (rhythmObjectUrl) {
+        URL.revokeObjectURL(rhythmObjectUrl);
+      }
+    });
+
+    function playGeneratedSound() {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+
+      if (generatedAudioContext) {
+        generatedAudioContext.close();
+      }
+
+      const audioContext = new AudioContext();
+      generatedAudioContext = audioContext;
+      const notes = [523.25, 659.25, 783.99, 1046.5];
+
+      notes.forEach((frequency, index) => {
+        const startAt = audioContext.currentTime + index * 0.13;
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        oscillator.type = "sine";
+        oscillator.frequency.setValueAtTime(frequency, startAt);
+        gain.gain.setValueAtTime(0, startAt);
+        gain.gain.linearRampToValueAtTime(0.18, startAt + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, startAt + 0.22);
+
+        oscillator.connect(gain);
+        gain.connect(audioContext.destination);
+        oscillator.start(startAt);
+        oscillator.stop(startAt + 0.24);
+      });
+    }
+
+    function playSecretSound() {
+      stopSecretSound(false);
+      secretAudio.currentTime = 0;
+      secretAudio.play().catch(() => {
+        playGeneratedSound();
+      });
+    }
+
+    function stopSecretSound(showMessage = true) {
+      secretAudio.pause();
+      secretAudio.currentTime = 0;
+
+      if (generatedAudioContext) {
+        generatedAudioContext.close();
+        generatedAudioContext = null;
+      }
+
+      if (showMessage) {
+        quoteText.textContent = "隐藏音效已停止。";
+      }
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
+
+      if (rhythmState.active) {
+        const key = event.key.toLowerCase();
+        if (key === "escape") {
+          closeRhythmGame();
+          return;
+        }
+
+        if (calibrationState.active && (key === " " || rhythmKeys.includes(key))) {
+          event.preventDefault();
+          registerCalibrationTap();
+          return;
+        }
+
+        if (key === "enter" && !rhythmState.playing) {
+          startRhythmGame();
+          return;
+        }
+
+        if (handleRhythmKey(key)) {
+          event.preventDefault();
+        }
+        return;
+      }
+
+      if (event.key === " " && (!secretAudio.paused || generatedAudioContext)) {
+        event.preventDefault();
+        stopSecretSound();
+        keyBuffer = "";
+        return;
+      }
+
+      if (event.key.length !== 1 && event.key !== " ") return;
+
+      keyBuffer = (keyBuffer + event.key.toLowerCase()).slice(-secretCode.length);
+      if (keyBuffer === secretCode) {
+        playSecretSound();
+        quoteText.textContent = "隐藏音效已触发：你输入了正确的暗号。";
+        unlockClue("audio");
+        keyBuffer = "";
+      }
+    });
+
+    renderProfile();
+    renderChart();
+    renderEggCards();
+    rhythmStats.result.textContent = `${rhythmDifficulty.toUpperCase()}：${rhythmChart.length} notes`;
+    updateRhythmStats();
+  </script>
+</body>
+</html>
